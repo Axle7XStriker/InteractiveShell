@@ -1,0 +1,139 @@
+#include "builtin_func.h"
+
+void ls(char * str)
+{
+    DIR*p;
+    struct dirent *d;	
+    p=opendir(str);
+    if(p==NULL)
+    {
+        perror("Cannot find directory");
+        exit(-1);
+    }
+    while(d=readdir(p))
+    {
+
+    	if(d->d_name[0]!='.')
+        	printf("%s\n",d->d_name);
+    }
+}
+void ls_a(char * str)
+{
+	char ch[2];
+	ch[0]='.'; ch[1]='\0';
+    DIR*p;
+    struct dirent *d;	
+    p=opendir(ch);
+    if(p==NULL)
+    {
+        perror("Cannot find directory");
+        exit(-1);
+    }
+    while(d=readdir(p))
+        printf("%s\n",d->d_name);
+}
+void ls_l(char * str, int flag)
+{
+    DIR*p;
+    struct dirent *dirp;
+    p=opendir(str);
+    while ((dirp = readdir(p)) != NULL)
+    {
+        struct stat fileStat;
+        stat(dirp->d_name,&fileStat);   
+        printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
+        printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");
+        printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");
+        printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");
+        printf( (fileStat.st_mode & S_IRGRP) ? "r" : "-");
+        printf( (fileStat.st_mode & S_IWGRP) ? "w" : "-");
+        printf( (fileStat.st_mode & S_IXGRP) ? "x" : "-");
+        printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
+        printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
+        printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
+        printf(" %ld ",fileStat.st_nlink);
+        printf(" %s ",pws->pw_name);
+        printf(" %ld",fileStat.st_size);
+        char date[20];
+        strftime(date, 20, "%b %d %R", localtime(&(fileStat.st_ctime)));
+        printf("  %s",date);
+        if(flag==2)
+        	printf(" %s\t",dirp->d_name);
+        else if(flag==1)
+        	if(dirp->d_name[0]!='.')
+        		printf(" %s\t",dirp->d_name);
+		printf("\n");
+	}
+}
+int ls_execute(char **arg)
+{
+	printf("%s %s",arg[1],arg[2]);
+	if(arg[1]==NULL)
+	{
+		char ch[2];
+		ch[0]='.';
+		ch[1]='\0';
+		ls(ch);
+		return 1;
+	}
+	else
+	{
+		char str[max_sz];
+		str[0]='.';
+		str[1]='\0';
+		int i=0;
+		int flag_a=0,flag_l=0,dir=0;
+		for(int i=0;arg[i]!=NULL;i++)
+		{
+			if(arg[i][0]=='-')
+			{
+				if(arg[i][1]=='a')
+				{
+					flag_a = 1;
+				}
+				else if(arg[i][1]=='l')
+				{
+					flag_l = 1;
+				}
+				else if((arg[i][1]=='a' && arg[i][2]=='l') || (arg[i][1]=='a' && arg[i][2]=='l'))
+				{
+					flag_a = 1;
+					flag_l = 1;
+				}
+			}
+			else if(arg[i][0]!='-' && arg[i]!=NULL)
+			{
+				dir=1;
+				strcpy(str,arg[i]);
+			}
+		}
+		if(flag_l==1)
+		{
+			if(dir==1 && flag_a==1)
+			{
+				ls_l(str,2);   
+			}
+			else if(dir==1 &&flag_a==0)
+			{
+				ls_l(str,1);
+			}
+			else if(dir==0 && flag_a==1)
+			{
+				ls_l(str,2);
+			}
+			else
+			{
+				ls_l(str,1) ; 
+			}
+		}
+		else if(flag_a==1)
+		{
+			ls_a(str);
+		}
+		else 
+		{
+			ls(str);
+		}
+		return 1;
+	}
+}
