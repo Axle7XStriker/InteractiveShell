@@ -10,11 +10,11 @@ int cd_execute(char **arg)
 		}
 		return 1;
 	}
-	else if(arg[1]=='~')
+	else if(arg[1][0]=='~')
 	{
 		char * result = (char *)malloc(sizeof(char)*sz);
 		strcpy(result,home);
-		strcpy(result+strlen(result),arg+1);
+		strcpy(result+strlen(result),arg[1]+1);
 		if(chdir(result)!=0)
 		{
 		 	perror("error");
@@ -30,4 +30,5 @@ int cd_execute(char **arg)
 			return 1;
 		}
 	}
+	return 1;
 }

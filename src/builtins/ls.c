@@ -10,7 +10,7 @@ void ls(char * str)
         perror("Cannot find directory");
         exit(-1);
     }
-    while(d=readdir(p))
+    while((d=readdir(p)))
     {
 
     	if(d->d_name[0]!='.')
@@ -19,17 +19,15 @@ void ls(char * str)
 }
 void ls_a(char * str)
 {
-	char ch[2];
-	ch[0]='.'; ch[1]='\0';
-    DIR*p;
+	DIR *p;
     struct dirent *d;	
-    p=opendir(ch);
+    p=opendir(str);
     if(p==NULL)
     {
         perror("Cannot find directory");
         exit(-1);
     }
-    while(d=readdir(p))
+    while((d=readdir(p)))
         printf("%s\n",d->d_name);
 }
 void ls_l(char * str, int flag)
@@ -41,33 +39,55 @@ void ls_l(char * str, int flag)
     {
         struct stat fileStat;
         stat(dirp->d_name,&fileStat);   
-        printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
-        printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");
-        printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");
-        printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");
-        printf( (fileStat.st_mode & S_IRGRP) ? "r" : "-");
-        printf( (fileStat.st_mode & S_IWGRP) ? "w" : "-");
-        printf( (fileStat.st_mode & S_IXGRP) ? "x" : "-");
-        printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
-        printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
-        printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
-        printf(" %ld ",fileStat.st_nlink);
-        printf(" %s ",pws->pw_name);
-        printf(" %ld",fileStat.st_size);
-        char date[20];
-        strftime(date, 20, "%b %d %R", localtime(&(fileStat.st_ctime)));
-        printf("  %s",date);
         if(flag==2)
-        	printf(" %s\t",dirp->d_name);
-        else if(flag==1)
-        	if(dirp->d_name[0]!='.')
-        		printf(" %s\t",dirp->d_name);
-		printf("\n");
+        {
+	        printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
+	        printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");
+	        printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");
+	        printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");
+	        printf( (fileStat.st_mode & S_IRGRP) ? "r" : "-");
+	        printf( (fileStat.st_mode & S_IWGRP) ? "w" : "-");
+	        printf( (fileStat.st_mode & S_IXGRP) ? "x" : "-");
+	        printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
+	        printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
+	        printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
+	        printf(" %ld ",fileStat.st_nlink);
+	        printf(" %s ",pws->pw_name);
+	        printf(" %s ",pws->pw_name);
+	        printf(" %ld",fileStat.st_size);
+	        char date[20];
+	        strftime(date, 20, "%b %d %R", localtime(&(fileStat.st_ctime)));
+	        printf("  %s",date);
+	        printf(" %s\t",dirp->d_name);
+			printf("\n");
+	    }
+        else if(dirp->d_name[0]!='.')
+        {
+        	printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
+	        printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");
+	        printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");
+	        printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");
+	        printf( (fileStat.st_mode & S_IRGRP) ? "r" : "-");
+	        printf( (fileStat.st_mode & S_IWGRP) ? "w" : "-");
+	        printf( (fileStat.st_mode & S_IXGRP) ? "x" : "-");
+	        printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
+	        printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
+	        printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
+	        printf(" %ld ",fileStat.st_nlink);
+	        printf(" %s ",pws->pw_name);
+	        printf(" %s ",pws->pw_name);
+	        printf(" %ld",fileStat.st_size);
+	        char date[20];
+	        strftime(date, 20, "%b %d %R", localtime(&(fileStat.st_ctime)));
+	        printf("  %s",date);
+	        printf(" %s\t",dirp->d_name);
+			printf("\n");
+        }
 	}
 }
 int ls_execute(char **arg)
 {
-	printf("%s %s",arg[1],arg[2]);
+	// printf("%s %s\n",arg[1],arg[2]);
 	if(arg[1]==NULL)
 	{
 		char ch[2];
@@ -83,10 +103,15 @@ int ls_execute(char **arg)
 		str[1]='\0';
 		int i=0;
 		int flag_a=0,flag_l=0,dir=0;
-		for(int i=0;arg[i]!=NULL;i++)
+		for(i=1;arg[i]!=NULL;i++)
 		{
 			if(arg[i][0]=='-')
 			{
+				if((arg[i][1]=='a' && arg[i][2]=='l') || (arg[i][1]=='l' && arg[i][2]=='a'))
+				{
+					flag_a = 1;
+					flag_l = 1;
+				}
 				if(arg[i][1]=='a')
 				{
 					flag_a = 1;
@@ -95,11 +120,7 @@ int ls_execute(char **arg)
 				{
 					flag_l = 1;
 				}
-				else if((arg[i][1]=='a' && arg[i][2]=='l') || (arg[i][1]=='a' && arg[i][2]=='l'))
-				{
-					flag_a = 1;
-					flag_l = 1;
-				}
+				
 			}
 			else if(arg[i][0]!='-' && arg[i]!=NULL)
 			{
@@ -111,18 +132,22 @@ int ls_execute(char **arg)
 		{
 			if(dir==1 && flag_a==1)
 			{
+				printf("gulshan1\n");
 				ls_l(str,2);   
 			}
 			else if(dir==1 &&flag_a==0)
 			{
+				printf("gulshan2\n");
 				ls_l(str,1);
 			}
 			else if(dir==0 && flag_a==1)
 			{
+				printf("gulshan3\n");	
 				ls_l(str,2);
 			}
 			else
 			{
+				printf("gulshan4\n");
 				ls_l(str,1) ; 
 			}
 		}

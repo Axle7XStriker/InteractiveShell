@@ -13,6 +13,11 @@ int is_background_process(char **cmd)
     }
     for (i=1; cmd[i] != NULL; i++)
     {
+        if (strcmp(cmd[i], "&") == 0)
+        {
+            cmd[i] = NULL;
+            return 1;
+        }
         for (j=0; cmd[i][j] != '\0'; j++)
         {
             if (cmd[i][j] == '&')

@@ -14,6 +14,9 @@
 #include "read_and_parse.h"
 #include "check_background_process.h"
 #include "execute.h"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
 
 const char *TOKEN_DELIMITER = " \t\n\r\a";
 const char *CMD_DELIMITER = ";";
