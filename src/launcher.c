@@ -5,8 +5,7 @@ void signal_handler(int sig)
     int status, wpid;
     wpid = waitpid(-1, &status, WNOHANG);
     if (wpid > 0)
-    printf("[%d]+ \tDone \texit status: %d", wpid, status);
-    BACKGROUND_PROCESS_COUNT--;
+    fprintf(stderr, "[%d]+ \tDone \texit status: %d", wpid, status);
 }
 
 int launch_cmd(char **cmd, int bg)
@@ -38,8 +37,7 @@ int launch_cmd(char **cmd, int bg)
         }
         else
         {
-            BACKGROUND_PROCESS_COUNT++;
-            printf("[%d] %d\n", BACKGROUND_PROCESS_COUNT, pid);
+            printf("[%d]\n", pid);
         }
     }
     return 1;

@@ -10,7 +10,7 @@ int execute_cmd(char **cmd, int bg)
     {
         if (strcmp(cmd[0], builtins[i]) == 0)
         {
-            printf("here\n");
+            //printf("here\n");
             return (*builtin_functions[i])(cmd);
         }
     }

@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int BACKGROUND_PROCESS_COUNT = 0;
 
 #endif
 

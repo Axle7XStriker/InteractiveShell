@@ -81,9 +81,9 @@ int main(int argc, char **argv)
                 cmd = parse_cmd(cmd_sequence[i], TOKEN_DELIMITER);
                 int j;
 				int bg = is_background_process(cmd);
-				for (j=0; cmd[j] != NULL; j++)
-					fprintf(stdout, "%s ", cmd[j]);
-				printf(": %d\n", bg);
+				//for (j=0; cmd[j] != NULL; j++)
+				//	fprintf(stdout, "%s ", cmd[j]);
+				//printf(": %d\n", bg);
 				status = execute_cmd(cmd, bg);
 				free(cmd);
 			}
