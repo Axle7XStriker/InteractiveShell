@@ -23,6 +23,7 @@ int main(int argc, char **argv)
 	while(status)
 	{
 		/*Display Prompt*/
+        
         fflush(stdin);
         getcwd(curr_dir,sz);
         int len1=strlen(curr_dir);
@@ -63,12 +64,8 @@ int main(int argc, char **argv)
         	}
         }
         /*Read the command(s) from stdin*/
-        //fflush(stdin);
         printf(" \n");
         cmd_line = read_cmd();
-        // printf("gulshan1\n");
-        // printf("%s\n",cmd_line);
-        //fprintf(stdout, "%s", cmd_line);
 		/*Parse the command(s) to get command(s) name and argument(s) required by that command*/
         cmd_sequence = parse_cmd(cmd_line, CMD_DELIMITER);
         
@@ -87,7 +84,7 @@ int main(int argc, char **argv)
 			}
 		}
 		free(cmd_sequence);
-		//free(cmd_line);
+		free(cmd_line);
 	}
 	//Terminate the shell
 
