@@ -20,6 +20,8 @@ int  pinfo_execute(char **arg)
 	strcat(dest, "/exe");
 	strcat(dest_status, "/status");
 	readlink(dest, flush, max_sz-1);
+	int lenght=strlen(flush);
+	flush[lenght]='\0';
 	printf("Path: %s\n",flush);
 
 	FILE * fp = fopen(dest_status, "r");

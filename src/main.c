@@ -64,7 +64,8 @@ int main(int argc, char **argv)
         	}
         }
         /*Read the command(s) from stdin*/
-        printf(" \n");
+        // printf(" \n");
+
         cmd_line = read_cmd();
 		/*Parse the command(s) to get command(s) name and argument(s) required by that command*/
         cmd_sequence = parse_cmd(cmd_line, CMD_DELIMITER);

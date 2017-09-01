@@ -2,7 +2,7 @@
 
 char* read_cmd()
 {
-    char *cmd;
+    char *cmd=NULL;
     size_t cmd_size;
     getline(&cmd, &cmd_size, stdin);
     
