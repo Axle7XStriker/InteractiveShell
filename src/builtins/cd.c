@@ -25,7 +25,7 @@ int cd_execute(char **arg)
 		strcpy(linklist,previous);
 		strcpy(previous,current);
 		strcpy(current,linklist);
-		printf("%s\n",previous);
+		//printf("%s\n",previous);
 		return 1;
 	}
 	else if(arg[1][0]=='~')

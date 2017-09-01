@@ -38,6 +38,30 @@ void nonblock(int state)
     tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
 
 }
+void nightwatch_execute_interrupt()
+{
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+	FILE * fp = fopen("/proc/interrupts", "r");
+	if (fp == NULL)
+    {
+    	perror("error");
+        return ;
+    }
+    while ((read = getline(&line, &len, fp)) != -1) {
+    	
+    	if(line[2]=='1' &&line[3]==':' && line[1]==' ')
+    	{
+    		printf("CPU Interrupt by Keyboard Controller i8042 with IRQ 1\n");
+        	printf("%s\n", line);
+        }
+    }
+
+    fclose(fp);
+    if (line)
+        free(line);
+}
 void nightwatch_execute()
 {
 	char dirty[6]= {'D','i','r','t','y'};
@@ -71,10 +95,20 @@ void nightwatch_execute()
 
 int nightswatch(char **arg)
 {
-	if(arg[1]==NULL || arg[2]==NULL || arg[3]==NULL || strcmp(arg[3],"dirty")!=0)
+	if(arg[1]==NULL || arg[2]==NULL || arg[3]==NULL || (strcmp(arg[3],"dirty")!=0 && strcmp(arg[3],"interrupt")))
 	{
-		fprintf(stderr, "Usage [ nightswatch -n {time-value} dirty ]\n");
+		fprintf(stderr, "Usage [ nightswatch -n {time-value} {dirty or interrupt} ]\n");
 		return 1;
+	}
+	int f_dirty=0;
+	int f_interrupt=0;
+	if(strcmp(arg[3],"dirty")==0)
+	{
+		f_dirty=1;
+	}
+	if(strcmp(arg[3],"interrupt")==0)
+	{
+		f_interrupt=1;
 	}
     int t = atoi(arg[2]);
     char c;
@@ -94,7 +128,14 @@ int nightswatch(char **arg)
         }
         if(c!='q')
         {
-        	nightwatch_execute();
+        	if(f_dirty==1)
+        	{
+        		nightwatch_execute();
+        	}
+        	if(f_interrupt==1)
+        	{
+        		nightwatch_execute_interrupt();
+        	}
         	sleep(t);
         }
     }
