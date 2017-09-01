@@ -17,6 +17,7 @@ int echo_execute(char **arg)
                 i++;
             }
         }
+        printf(" ");
     }
     printf("\n");
     return 1;
