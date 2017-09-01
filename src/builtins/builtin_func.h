@@ -17,12 +17,18 @@
 #include <dirent.h>
 #include <time.h>
 #include <sys/stat.h>
+#include <unistd.h>
+#include <sys/select.h>
+#include <termios.h>
 #define sz 123
 #define max_sz 1234
 
 #endif
 
 extern char home[sz];
+extern char previous[sz];
+extern char current[sz];
+extern char linklist[sz];
 extern struct passwd *pws;
 
 int ls_execute (char **);

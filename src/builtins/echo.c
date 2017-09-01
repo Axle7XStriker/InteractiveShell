@@ -2,17 +2,20 @@
 
 int echo_execute(char **arg)
 {
-	//char argv[1000];
-    int i=0;
-    while(1)
+    int i=0,j=0;
+    for(j=1;arg[j]!=NULL;j++)
     {
-        if(arg[1][i]=='\0')
+        i=0;
+        while(1)
         {
-            break;
-        }
-        else{
-            fprintf(stdout,"%c",arg[1][i]);
-            i++;
+            if(arg[j][i]=='\0')
+            {
+                break;
+            }
+            else{
+                fprintf(stdout,"%c",arg[j][i]);
+                i++;
+            }
         }
     }
     printf("\n");

@@ -132,22 +132,18 @@ int ls_execute(char **arg)
 		{
 			if(dir==1 && flag_a==1)
 			{
-				printf("gulshan1\n");
 				ls_l(str,2);   
 			}
 			else if(dir==1 &&flag_a==0)
 			{
-				printf("gulshan2\n");
 				ls_l(str,1);
 			}
 			else if(dir==0 && flag_a==1)
 			{
-				printf("gulshan3\n");	
 				ls_l(str,2);
 			}
 			else
 			{
-				printf("gulshan4\n");
 				ls_l(str,1) ; 
 			}
 		}

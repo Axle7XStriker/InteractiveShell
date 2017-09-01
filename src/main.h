@@ -7,7 +7,9 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
-
+#include <unistd.h>
+#include <sys/select.h>
+#include <termios.h>
 #endif
 
 //#include "builtin_func.h"
@@ -22,6 +24,9 @@ const char *TOKEN_DELIMITER = " \t\n\r\a";
 const char *CMD_DELIMITER = ";";
 
 char home[sz];
+char previous[sz];
+char current[sz];
+char linklist[sz];
 struct passwd *pws;
 
 

@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     char curr_dir[sz];
     getcwd(curr_dir,sz);
     strcpy(home,curr_dir);
-    int i=0,j=0,idx=0;
+    int i=0,j=0;
     int len_home =strlen(home);
 	//Run command execution loop
 	while(status)
@@ -28,7 +28,6 @@ int main(int argc, char **argv)
         int len1=strlen(curr_dir);
         i=0;
         j=0;
-        idx=0;
         if(len1 <len_home)
         {
         	printf(ANSI_COLOR_GREEN	"<%s@%s>" ANSI_COLOR_RESET ":" ANSI_COLOR_BLUE	"%s" ANSI_COLOR_RESET "$ ",pws->pw_name,hostname, curr_dir);
@@ -79,7 +78,6 @@ int main(int argc, char **argv)
 			for (i=0; ((cmd_sequence[i] != NULL) && status); i++)
 			{
                 cmd = parse_cmd(cmd_sequence[i], TOKEN_DELIMITER);
-                int j;
 				int bg = is_background_process(cmd);
 				//for (j=0; cmd[j] != NULL; j++)
 				//	fprintf(stdout, "%s ", cmd[j]);
