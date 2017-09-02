@@ -2,7 +2,8 @@
 * An interactive user defined shell in C
 
 #Complile 
-* Complile using make
+* Complile using "make"
+* Recompile : delete all .o file by make clean and then again do make. 
 
 #Run
 * Run using ./shell
@@ -66,7 +67,15 @@ These commands are implemented as a part of shell
 ```
 
 
+#Devlopers
+```c
+Gulshan kumar  Aman Bansal
+```
 
-Copyright@2017
 
-Made by :  Gulshan kumar  Aman Bansal
+
+#licensing
+```c
+Copyright (C)  - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+```

@@ -5,7 +5,7 @@ void signal_handler(int sig)
     int status, wpid;
     wpid = waitpid(-1, &status, WNOHANG);
     if (wpid > 0)
-    fprintf(stderr, "[%d]+ \tDone \texit status: %d", wpid, status);
+    fprintf(stderr, "\n[%d]+ \tDone \texit status: %d", wpid, status);
 }
 
 int launch_cmd(char **cmd, int bg)
