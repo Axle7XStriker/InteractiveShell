@@ -13,6 +13,7 @@
 * Coloured prompt 
 * Keeps the directory where the shell is run, as home directory and shows the path of the     current directory relative to that home directory
 * Every command is run in new forked process
+* Error Handling
 
 ## Background Processes
 * Commands which have '&' appended, run in background

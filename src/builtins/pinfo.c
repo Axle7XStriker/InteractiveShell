@@ -4,8 +4,13 @@ int  pinfo_execute(char **arg)
 {
 	if(arg[1]==NULL)
 	{
-		fprintf(stderr, "usage: pinfo [<valid pid>]\n");
-    	return 1;
+		char result[20];
+		int pid= getpid();
+		sprintf(result,"%d" ,pid);
+		arg[1]=result;
+		// printf("%s\n",arg[1]);
+		pinfo_execute(arg);
+		return 1;
 	}
 	char state[6]={'S','t','a','t','e'};
 	char id[4]={'P','i','d'};
@@ -16,15 +21,47 @@ int  pinfo_execute(char **arg)
 	char * dest = malloc(sizeof(char)*max_sz);
 	strcpy(dest, "/proc/");
 	strcat(dest, arg[1]);
+	struct stat sb;
+	if(stat(dest,&sb) < 0)
+	{
+		perror("error");
+		return 1;
+	}
 	strcpy(dest_status, dest);
 	strcat(dest, "/exe");
 	strcat(dest_status, "/status");
-	readlink(dest, flush, max_sz-1);
-	int lenght=strlen(flush);
-	flush[lenght]='\0';
-	printf("Path: %s\n",flush);
-
+	int ans = readlink(dest, flush, max_sz);
+	int inside=0;
+	if(ans <=0)
+	{
+		inside=1;
+		fprintf(stderr,"Path: ");
+		perror("error");
+	}
+	int flag=0;
+	if(inside==0)
+	{
+		char *path_end =NULL; 
+		path_end =  strrchr(flush,'/');
+		
+	
+		if(path_end==NULL)
+		{
+			flag=1;
+			printf("Path: \n");
+		}
+		++path_end;
+		*path_end = '\0';
+	}
+	
 	FILE * fp = fopen(dest_status, "r");
+	if(fp==NULL)
+	{
+		perror("error");
+		return 1;
+	}
+	if(flag==0 && inside==0)
+		printf("Path: %s\n",flush);
 	int st = 0;
 	size_t buff = max_sz;
 	do
@@ -43,8 +80,6 @@ int  pinfo_execute(char **arg)
 	    	printf("%s",dest);
 	    if(dest[0]==peak2[0] && dest[1]==peak2[1] && dest[2]==peak2[2] && dest[3]==peak2[3] && dest[4]==peak2[4] && dest[5]==peak2[5])
 	    	printf("%s",dest);
-	    // if(st==2 || st==5 || st==17)
-	      // printf("%s",dest);
 
 	}while(st -48<0);
 	fclose(fp);
