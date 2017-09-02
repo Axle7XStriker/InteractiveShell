@@ -10,6 +10,10 @@
 #include <unistd.h>
 #include <sys/select.h>
 #include <termios.h>
+
+char* read_cmd();
+char** parse_cmd(char *, const char *);
+
 #endif
 
 //#include "builtin_func.h"

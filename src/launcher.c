@@ -10,7 +10,7 @@ void signal_handler(int sig)
 
 int launch_cmd(char **cmd, int bg)
 {
-    int pid, wpid, status;
+    int pid, status;
     signal(SIGCHLD, signal_handler);
     pid = fork();
     
@@ -32,7 +32,7 @@ int launch_cmd(char **cmd, int bg)
         {
             do
             {
-                wpid = waitpid(pid, &status, WUNTRACED);
+                waitpid(pid, &status, WUNTRACED);
             }while(!WIFEXITED(status) && !WIFSIGNALED(status));
         }
         else
