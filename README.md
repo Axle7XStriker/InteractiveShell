@@ -1,14 +1,14 @@
 # InteractiveShell
 * An interactive user defined shell in C
 
-#Complile 
+# Complile 
 * Complile using "make"
 * Recompile : delete all .o file by make clean and then again do make. 
 
-#Run
+# Run
 * Run using ./shell
 
-#Features
+# Features
 ## General
 * Works almost like normal shell
 * Coloured prompt 
@@ -29,16 +29,16 @@ These commands are implemented as a part of shell
 * pinfo
   * It returns process related information like pid, process status, memory, etc
 
-###BONUS
+### BONUS
 1. If the background process exits then the shell must display the appropriate message to the user.	
 2. nightswatch (interrupt,dirty) 
   * Non blocking user input method if User press 'q' then exit 
   * [ nightwatch -n t interrupt] It  print the number of times the CPU(s) has(ve) been interrupted by the keyboard   controller (i8042 with IRQ 1) t times on screen .
   * [ nightwatch -n t dirty] It prints the total amount of memory, in kilobytes, waiting to be written back to the disk on every t seconds.
 
-#File Structure
+# File Structure
 #### Modularity in Code 
-##src directory
+## src directory
 * Makefile  
   * Compile and link all file and made a executable file ./shell to run shell
 * main.c
@@ -54,7 +54,7 @@ These commands are implemented as a part of shell
 * filename.h 
   * containing  respective libraries nedded
 
-#####builtins directory [Name of file showing function it performs]
+##### builtins directory [Name of file showing function it performs]
 ```c
 * cd.c
 * echo.c
@@ -67,15 +67,13 @@ These commands are implemented as a part of shell
 ```
 
 
-#Devlopers
+# Devlopers
 ```c
-Gulshan kumar  Aman Bansal
+Gulshan Kumar  Aman Bansal
 ```
 
 
 
-#licensing
-```c
+# Licensing
 Copyright (C)  - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
-```
+Unauthorized copying of this file, via any medium is strictly prohibited
