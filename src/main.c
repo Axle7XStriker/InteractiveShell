@@ -1,8 +1,16 @@
 //#include "read_and_parse.h"
 #include "main.h"
 
+void SIGINT_signal_handler(int sig)
+{
+	printf("\n");
+	fflush(stdout);
+}
+
 int main(int argc, char **argv)
 {
+	signal(SIGINT, SIGINT_signal_handler);
+	
 	int status = 1;
 	char *cmd_line;
 	char **cmd_sequence, **cmd;
@@ -77,6 +85,9 @@ int main(int argc, char **argv)
 			{
                 cmd = parse_cmd(cmd_sequence[i], TOKEN_DELIMITER);
 				int bg = is_background_process(cmd);
+				//for (j=0; cmd[j] != NULL; j++)
+				//	fprintf(stdout, "%s ", cmd[j]);
+				//printf(": %d\n", bg);
 				status = execute_cmd(cmd, bg);
 				free(cmd);
 			}

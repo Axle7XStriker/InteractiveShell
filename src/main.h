@@ -8,13 +8,12 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <grp.h>
 #include <sys/select.h>
 #include <termios.h>
 
 char* read_cmd();
 char** parse_cmd(char *, const char *);
-char ** redirect(char** args);
+
 #endif
 
 //#include "builtin_func.h"
@@ -35,7 +34,7 @@ char linklist[sz];
 struct passwd *pws;
 
 
-char *builtins[] = {"ls","cd", "pwd", "echo", "pinfo", "nightswatch", "exit", NULL};
+char *builtins[] = {"ls","cd", "pwd", "echo", "pinfo", "nightswatch", "exit", "quit", "setenv", "unsetenv", "jobs", "kjob", "fg", "bg", "overkill", NULL};
 int (*builtin_functions[]) (char **) = {
                                             &ls_execute, 
                                             &cd_execute, 
@@ -43,5 +42,16 @@ int (*builtin_functions[]) (char **) = {
                                             &echo_execute, 
                                             &pinfo_execute, 
                                             &nightswatch, 
-                                            &exit_execute
+                                            &exit_execute,
+                                            &quit_execute,
+                                            &setenv_execute,
+                                            &unsetenv_execute,
+                                            &jobs_execute,
+                                            &kjob_execute,
+                                            &fg_execute,
+                                            &bg_execute,
+                                            &overkill_execute
                                         };
+
+int num_bg_process = 0;
+int current_running_child_pid = 0;
