@@ -16,27 +16,86 @@
 * Every command is run in new forked process
 * Error Handling
 
+
+
 ## Background Processes
+
 * Commands which have '&' appended, run in background
 * When background process exits, shell display a message with its exit status
 
+
+
 ## Implemented Built-in-Commands
+
 These commands are implemented as a part of shell
 * cd  (Also "cd -" )
 * echo
 * pwd
 * ls (ls -l, ls -al, ls -a, ls -la with directory name )
+* setenv var [value] 
+* unsetenv var 
+* jobs
+* kjob <jobNumber> <signalNumber> 
+* fg <jobNumber>
+* bg <jobNumber>
+* overkill
+* quit
+* CTRL-Z
+* CTRL-C
 * pinfo
   * It returns process related information like pid, process status, memory, etc
 
+
+
+
+##For Assignment 3
+
+
+###Specification 1: Foreground and background processes
+1. If the background process exits then the shell will display the appropriate message to      
+
+    the user and for foreground process shell will wait and regain its control once the process exist.
+
+   ​
+
+### Specification 2: Implement input-output redirection functionality
+
+1. Output of running one (or more) commands can be redirected to a file. 
+
+
+
+### Specification 3: Implement command redirection using pipes
+
+1. Program can handle any number of pipes.
+
+   ​
+
+### Specification 4: Implement i/o redirection + pipes redirection
+
+* Use Case : Example => cat < in.txt | wc -l > lines.txt
+
+
+
+### Specification 5: User-defined commands
+
+* listed in Builtins Command
+
+
+
+
+
 ### BONUS
+
 1. If the background process exits then the shell must display the appropriate message to the user.	
 2. nightswatch (interrupt,dirty) 
   * Non blocking user input method if User press 'q' then exit 
   * [ nightwatch -n t interrupt] It  print the number of times the CPU(s) has(ve) been interrupted by the keyboard   controller (i8042 with IRQ 1) t times on screen .
   * [ nightwatch -n t dirty] It prints the total amount of memory, in kilobytes, waiting to be written back to the disk on every t seconds.
 
+
+
 # File Structure
+
 #### Modularity in Code 
 ## src directory
 * Makefile  
@@ -53,6 +112,16 @@ These commands are implemented as a part of shell
   * Preparing to execute the instruction
 * filename.h 
   * containing  respective libraries nedded
+* redirection.h
+  * containing respective libraries nedded
+* redirection.c
+  * Execute redirection command
+* piping.h
+  * containing  respective libraries nedded
+* piping.c
+  * Execute and handle number of pipes
+
+
 
 ##### builtins directory [Name of file showing function it performs]
 ```c
