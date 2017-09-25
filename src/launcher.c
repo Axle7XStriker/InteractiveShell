@@ -16,7 +16,8 @@ int launch_cmd(char **cmd, int bg)
     
     if(pid == 0)
     {
-        
+    	
+        cmd=redirect(cmd);
         if (execvp(cmd[0], cmd) == -1)
             perror("shell");
         exit(EXIT_FAILURE);

@@ -32,13 +32,15 @@ void ls_a(char * str)
 }
 void ls_l(char * str, int flag)
 {
-    DIR*p;
-    struct dirent *dirp;
+    DIR*p =NULL;
+    struct dirent *dirp =NULL;
     p=opendir(str);
     while ((dirp = readdir(p)) != NULL)
     {
+    	char convert[1024];
+    	sprintf(convert, "%s/%s", str, dirp->d_name);
         struct stat fileStat;
-        stat(dirp->d_name,&fileStat);   
+        stat(convert,&fileStat);   
         if(flag==2)
         {
 	        printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
@@ -51,7 +53,7 @@ void ls_l(char * str, int flag)
 	        printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
 	        printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
 	        printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
-	        printf(" %ud ",fileStat.st_nlink);
+	        printf(" %lu",fileStat.st_nlink);
 	        printf(" %s ",pws->pw_name);
 	        printf(" %s ",pws->pw_name);
 	        printf(" %ld",fileStat.st_size);
@@ -73,9 +75,11 @@ void ls_l(char * str, int flag)
 	        printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
 	        printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
 	        printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
-	        printf(" %ud ",fileStat.st_nlink);
+	        printf(" %lu ",fileStat.st_nlink);
 	        printf(" %s ",pws->pw_name);
-	        printf(" %s ",pws->pw_name);
+	        struct group *grp;
+	        grp=getgrgid(fileStat.st_gid);
+	        printf(" %s ",grp->gr_name);
 	        printf(" %ld",fileStat.st_size);
 	        char date[20];
 	        strftime(date, 20, "%b %d %R", localtime(&(fileStat.st_ctime)));
@@ -99,8 +103,6 @@ int ls_execute(char **arg)
 	else
 	{
 		char str[max_sz];
-		str[0]='.';
-		str[1]='\0';
 		int i=0;
 		int flag_a=0,flag_l=0,dir=0;
 		for(i=1;arg[i]!=NULL;i++)
@@ -124,6 +126,12 @@ int ls_execute(char **arg)
 			}
 			else if(arg[i][0]!='-' && arg[i]!=NULL)
 			{
+				struct stat sb;
+				if(stat(arg[i],&sb) < 0)
+				{
+					perror("error");
+					return 1;
+				}
 				dir=1;
 				strcpy(str,arg[i]);
 			}
@@ -140,20 +148,42 @@ int ls_execute(char **arg)
 			}
 			else if(dir==0 && flag_a==1)
 			{
+				str[0]='.';
+				str[1]='\0';
 				ls_l(str,2);
 			}
 			else
 			{
+				str[0]='.';
+				str[1]='\0';
 				ls_l(str,1) ; 
 			}
 		}
 		else if(flag_a==1)
 		{
-			ls_a(str);
+			if(dir==0)
+			{
+				str[0]='.';
+				str[1]='\0';
+				ls_a(str);
+			}
+			else if(dir==1)
+			{
+				ls_a(str);
+			}
 		}
 		else 
 		{
-			ls(str);
+			if(dir==0)
+			{
+				str[0]='.';
+				str[1]='\0';
+				ls(str);
+			}
+			else if(dir==1)
+			{
+				ls(str);
+			}
 		}
 		return 1;
 	}

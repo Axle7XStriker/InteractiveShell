@@ -15,6 +15,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <dirent.h>
+#include <grp.h>
 #include <time.h>
 #include <sys/stat.h>
 #include <unistd.h>

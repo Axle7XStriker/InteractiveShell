@@ -8,12 +8,13 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <grp.h>
 #include <sys/select.h>
 #include <termios.h>
 
 char* read_cmd();
 char** parse_cmd(char *, const char *);
-
+char ** redirect(char** args);
 #endif
 
 //#include "builtin_func.h"

@@ -1,4 +1,4 @@
-OBJ = read_and_parse.o check_background_process.o launcher.o execute.o main.o
+OBJ = read_and_parse.o check_background_process.o launcher.o execute.o main.o redirection.o piping.o
 BLT = builtins/ls.c builtins/cd.o builtins/pwd.o builtins/echo.o builtins/pinfo.o builtins/nightswatch.c builtins/exit.o
 OBJ += ${BLT}
 CC = gcc

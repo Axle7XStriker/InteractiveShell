@@ -18,3 +18,4 @@ int launch_cmd(char **, int);
 
 #endif
 
+#include "redirection.h"
