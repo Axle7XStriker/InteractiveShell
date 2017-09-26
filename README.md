@@ -48,10 +48,10 @@ These commands are implemented as a part of shell
 
 
 
-##For Assignment 3
+## For Assignment 3
 
 
-###Specification 1: Foreground and background processes
+### Specification 1: Foreground and background processes
 1. If the background process exits then the shell will display the appropriate message to      
 
     the user and for foreground process shell will wait and regain its control once the process exist.
@@ -128,10 +128,15 @@ These commands are implemented as a part of shell
 * cd.c
 * echo.c
 * ls.c
-* exit.c
+* exit_quit.c
 * pinfo.c
 * pwd.c
 * nightswatch.c
+* setenv_unsetenv.c
+* jobs.c
+* fg_bg.c
+* kjob.c
+* overkill.c
 * builtin_func.h
 ```
 
