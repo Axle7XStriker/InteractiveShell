@@ -51,7 +51,7 @@ void ls_l(char * str, int flag)
 	        printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
 	        printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
 	        printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
-	        printf(" %ud ",fileStat.st_nlink);
+	        printf(" %lu ",fileStat.st_nlink);
 	        printf(" %s ",pws->pw_name);
 	        printf(" %s ",pws->pw_name);
 	        printf(" %ld",fileStat.st_size);
@@ -73,7 +73,7 @@ void ls_l(char * str, int flag)
 	        printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
 	        printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
 	        printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
-	        printf(" %ud ",fileStat.st_nlink);
+	        printf(" %lu ",fileStat.st_nlink);
 	        printf(" %s ",pws->pw_name);
 	        printf(" %s ",pws->pw_name);
 	        printf(" %ld",fileStat.st_size);

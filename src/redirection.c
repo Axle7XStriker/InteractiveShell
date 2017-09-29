@@ -72,7 +72,7 @@ char **redirect (char ** cmd)
 	if(check[1]==1)
 	{
 
-		*(fd+1) = open (out, O_WRONLY | O_CREAT, 0666);
+		*(fd+1) = open (out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if(*(fd+1)<0)
 		{
 			perror("Unable to open output file");
@@ -86,7 +86,7 @@ char **redirect (char ** cmd)
 	if(check[2]==1)
 	{
 
-		*(fd+2) = open (outdir, O_WRONLY | O_CREAT | O_APPEND , 0666);
+		*(fd+2) = open (outdir, O_WRONLY | O_CREAT | O_APPEND , 0644);
 		if(*(fd+2)<0)
 		{
 			perror("Unable to open the output file");

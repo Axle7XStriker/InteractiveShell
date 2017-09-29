@@ -33,7 +33,10 @@ int setenv_execute (char **args)
         if (setenv(args[1], arg, 1) == 0)
             return 1;
         else
-            return 0;
+        {
+            perror("shell");
+            return 1;
+        }
     }
 }
 
